@@ -1,10 +1,9 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
-	"regexp"
 	"strings"
+	"unicode"
 )
 
 func main() {
@@ -12,19 +11,18 @@ func main() {
 }
 
 func Capitalizenth(s string, nth int) string {
-	var b bytes.Buffer
-	isAlphaNumeric := regexp.MustCompile("^[A-Za-z0-9]+$").MatchString
+	var b strings.Builder
 	var c = 0
 	for _, letter := range s {
-		if isAlphaNumeric(string(letter)) {
+		if unicode.IsLetter(letter) || unicode.IsNumber(letter) {
 			c++
 		}
 		if c%nth == 0 {
 			// capitalize
-			b.WriteString(strings.ToUpper(string(letter)))
+			b.WriteString(string(unicode.ToUpper(letter)))
 		} else {
 			// downcase
-			b.WriteString(strings.ToLower(string(letter)))
+			b.WriteString(string(unicode.ToLower(letter)))
 		}
 	}
 
